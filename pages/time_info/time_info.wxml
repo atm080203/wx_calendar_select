@@ -1,0 +1,38 @@
+<view class="mask" style="{{ mask_is_hide ? 'display:none;' : 'display:block;' }}" bindtap="cancel"></view>
+<view class="flex box box-tb box-align-center">
+  <view class="calendar pink-color box box-tb">
+        <!--week-->
+        <view class="weeks box box-lr box-pack-center box-align-center">
+            <view class="flex week fs28" wx:for="{{weeks_ch}}" wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+        </view>
+        <!--end_week-->
+          <view class="flex fs28 month_title">{{cur_month || "--"}} 月</view>
+          <view class="days box box-lr box-wrap">
+              <view wx:if="{{hasEmptyGrid}}" class="grid white-color box box-align-center box-pack-center" wx:for="{{empytGrids}}" wx:key="{{index}}" data-idx="{{index}}"></view>
+              <view class="under_line grid white-color box box-align-center box-pack-center" wx:for="{{days}}" wx:for-index="days_index" wx:for-item="days_item" wx:key="{{days_index}}" data-idx="{{day_index}}">
+              <!--new_picker-->
+                <view class="day {{days_item.disabled ? '' : 'border-radius '}}{{(day == days_item.day) && (month==days_item.month) ? 'pink-bg' : ''}} box box-align-center box-pack-center" bindtap="{{days_item.disabled ? '' : 'bindNewPicker'}}" data-day="{{days_item.day}}" data-month="{{days_item.month}}">{{days_item.day}}</view>
+              <!--end_new_picer-->
+              </view>
+          </view>
+  </view>
+        <!--mask-->
+            <view class="mask_view" style="{{ mask_is_hide ? 'display:none;':'display:block;'}}" >
+              <view class="mask_title_view">
+                <view class="mask_title_cancel" bindtap="cancel">取消</view>
+                <view bindtap="bindNextStep" data-item_id="{{item_id}}" class="mask_title_next">下一步</view>
+              </view>
+              <picker-view indicator-style="height: 50px;" style="width: 100%; height: {{window_height/2.5}}px;" value="{{value}}" bindchange="bindPickerChange">
+                <picker-view-column>
+                  <view wx:for="{{select_info}}" wx:key="{{item}}" style="line-height: 50px">{{item.start_time}} - {{item.end_time}}</view>
+                </picker-view-column>
+                <view style="line-height: {{window_height/2.5}}px;">时间</view>
+                <picker-view-column>
+                  <view wx:for="{{remain_num}}" wx:key="{{item}}" style="line-height: 50px">{{item}}</view>
+                </picker-view-column>
+                  <view style="line-height: {{window_height/2.5}}px;">数量</view>
+              </picker-view>
+            </view>
+
+
+</view>
